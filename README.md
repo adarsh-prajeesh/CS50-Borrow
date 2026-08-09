@@ -38,4 +38,11 @@ On the index page, we need to display:
 To get the name of the person, only the transaction ID or the user's ID is stored in the transactions table. We perform an SQL JOIN function which can gather it, join the tables, and get the names of the people.
 ## The request page
 The request page shows a dropdown menu of all the people who are registered on the page from whom we can request money. The text input lets you input the amount of money you want to request from that person. Clicking on request makes an SQL database command which puts the borrower's ID (which is our ID), the lender's ID (which is the other person's ID), and the amount into the request table. It automatically gets populated in the lend page for the person whom we have clicked as the lender. 
-## 
+It also has an AI-generated notification algorithm which would send a notification to the user if they have notifications on from their browser about who has asked for the borrow request and the amount of money which was in the borrow request. It comes up as a notification from their browser. 
+## The lend page
+The lend page shows all the pending requests sent using the borrow page to you. It shows up in a table with a tick button, which can be used to agree to pay the amount, and a cross button, which can be used to reject it.
+Pressing the tick goes to the transaction page and, upon completion of the transaction, adds to the transaction table and adds it to that user's dashboard in index.html. By doing reject, it just removes it from the requests table. 
+## The repay page
+Shows the borrowed table from index.html with the repay buttons for quick access 
+## The handle_request route
+This is not a web page. It is just a route which is used to gather information on whether they press the tick or wrong, or to gather the repay button's click and the person who must be transacted. It automatically calls the transact page based on the set requirements with the correct arguments used for the transact page so that the transaction goes smoothly. 
