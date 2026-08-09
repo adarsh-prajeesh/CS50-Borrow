@@ -1,0 +1,98 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block main %}
+
+    <div class="row mb-4">
+        <div class="col-md-4 mb-2">
+            <div class="card text-center border-success shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-success">Total Lent</h5>
+                    <p class="card-text fs-4 fw-bold text-success">{{ total_lent | inr }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-2">
+            <div class="card text-center border-danger shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-danger">Total Borrowed</h5>
+                    <p class="card-text fs-4 fw-bold text-danger">{{ total_borrowed | inr }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-2">
+            <div class="card text-center {% if net_total >= 0 %}border-primary{% else %}border-warning{% endif %} shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title {% if net_total >= 0 %}text-primary{% else %}text-warning{% endif %}">Position</h5>
+                    <p class="card-text fs-4 fw-bold {% if net_total >= 0 %}text-primary{% else %}text-warning{% endif %}">
+                        {{ net_total | inr }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lent Table -->
+    <div class="mb-3 text-start">
+        <h3>Lent:</h3>
+    </div>
+    <div class="mb-4">
+        <table class="table table-striped text-start align-middle">
+            <thead>
+                <tr>
+                    <th class="text-start">Borrower</th>
+                    <th class="text-end">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for borrower in lent %}
+                    <tr>
+                        <td class="text-start">{{ borrower.name }}</td>
+                        <td class="text-end">{{ borrower.amount | inr }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="2" class="text-center text-muted">No active loans given.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Borrowed Table -->
+    <div class="mb-3 text-start">
+        <h3>Borrowed:</h3>
+    </div>
+    <div class="mb-4">
+        <table class="table table-striped text-start align-middle">
+            <thead>
+                <tr>
+                    <th class="text-start">Lender</th>
+                    <th class="text-end">Amount</th>
+                    <th class="text-end">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for lender in borrowed %}
+                    <tr>
+                        <td class="text-start">{{ lender.name }}</td>
+                        <td class="text-end">{{ lender.amount | inr }}</td>
+                        <td class="text-end">
+                            <a href="/payment?action_type=repay&target_id={{ lender.id }}" class="btn btn-sm btn-outline-success">
+                                Repay
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3" class="text-center text-muted">No active loans taken.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

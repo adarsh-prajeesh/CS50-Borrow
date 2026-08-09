@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Payment
+{% endblock %}
+
+{% block main %}
+<div class="container col-md-5 text-center">
+    <h2 class="mb-4">Complete Payment</h2>
+
+    <!-- Card Display Preview -->
+    <div class="card bg-dark text-white shadow-lg mb-4 rounded-4 position-relative overflow-hidden mx-auto" style="max-width: 380px; height: 220px;">
+        <!-- Card Background SVG -->
+        <img src="{{ url_for('static', filename='card.svg') }}" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" style="opacity: 0.85;" alt="Credit Card">
+
+        <!-- Overlay Card Info -->
+        <div class="position-relative p-4 d-flex flex-column justify-content-between h-100 text-start">
+            <div class="d-flex justify-content-between align-items-center">
+                <span class="fw-bold fs-5 tracking-wide text-uppercase">Debit / Credit</span>
+                <i class="bi bi-chip fs-3"></i>
+            </div>
+
+            <div class="my-2">
+                <p class="mb-0 text-muted small text-uppercase">Number</p>
+                <div id="cardDisplayNumber" class="fs-4 fw-monospace tracking-widest">•••• •••• •••• ••••</div>
+            </div>
+
+            <div>
+                <p class="mb-0 text-muted small text-uppercase">Name</p>
+                <div class="fw-bold text-uppercase">{{ username }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Form -->
+    <form action="/payment" method="post" class="text-start">
+        <!-- CRITICAL FIX: Pass action_type and target_id from URL query params to POST body -->
+        <input type="hidden" name="action_type" value="{{ action_type }}">
+        <input type="hidden" name="target_id" value="{{ target_id }}">
+
+        <div class="mb-3">
+            <label for="cardholder" class="form-label fw-semibold">Cardholder Name</label>
+            <input type="text" id="cardholder" class="form-control" value="{{ username }}" readonly disabled>
+        </div>
+
+        <div class="mb-3">
+            <label for="card_number" class="form-label fw-semibold">Credit Card Number</label>
+            <input type="text"
+                   name="card_number"
+                   id="card_number"
+                   class="form-control form-control-lg"
+                   placeholder="XXXX XXXX XXXX XXXX"
+                   maxlength="19"
+                   required
+                   autocomplete="off">
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-6">
+                <label for="expiry" class="form-label fw-semibold">Expiry Date</label>
+                <input type="text" id="expiry" class="form-control" placeholder="MM/YY" maxlength="5" required>
+            </div>
+            <div class="col-6">
+                <label for="cvv" class="form-label fw-semibold">CVV</label>
+                <input type="password" id="cvv" class="form-control" placeholder="XXX" maxlength="3" required>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-success btn-lg w-100">Pay Now</button>
+    </form>
+</div>
+
+<!-- JavaScript to update card number preview in real-time -->
+<script>
+    const cardInput = document.getElementById('card_number');
+    const cardDisplay = document.getElementById('cardDisplayNumber');
+
+    cardInput.addEventListener('input', (e) => {
+        // Format with spaces every 4 digits
+        let value = e.target.value.replace(/\D/g, '');
+        let formatted = value.match(/.{1,4}/g)?.join(' ') || '';
+
+        e.target.value = formatted;
+        cardDisplay.textContent = formatted || '•••• •••• •••• ••••';
+    });
+</script>
+{% endblock %}

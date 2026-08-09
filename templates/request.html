@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Request Money
+{% endblock %}
+
+{% block main %}
+    <div class="container col-md-6 text-start">
+        <h2 class="mb-4 text-center">Request Money</h2>
+        <form action="/request" method="post">
+            <div class="mb-3">
+                <label for="lender_id" class="form-label">Request From (Lender)</label>
+                <select class="form-select" name="lender_id" id="lender_id" required>
+                    <option value="" disabled selected>Select a user</option>
+                    {% for user in users %}
+                        <option value="{{ user.id }}">{{ user.username }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="amount" class="form-label">Amount</label>
+                <input class="form-control" name="amount" id="amount" type="number" step="1" min="1" placeholder="Amount" required>
+            </div>
+            <button class="btn btn-primary w-100" type="submit">Send Request</button>
+        </form>
+    </div>
+{% endblock %}

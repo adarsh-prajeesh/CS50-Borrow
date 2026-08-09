@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Lend Requests
+{% endblock %}
+
+{% block main %}
+    <div class="mb-3 text-start">
+        <h3>Pending Lend Requests:</h3>
+    </div>
+    <div class="mb-4">
+        <table class="table table-striped text-start align-middle">
+            <thead>
+                <tr>
+                    <th class="text-start">Borrower</th>
+                    <th class="text-end">Amount</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for req in requests %}
+                    <tr>
+                        <td class="text-start">{{ req.borrower }}</td>
+                        <td class="text-end">{{ req.amount | inr }}</td>
+                        <td class="text-center">
+                            <form action="/handle_request" method="post" class="d-inline">
+                                <input type="hidden" name="request_id" value="{{ req.request_id }}">
+                                <button type="submit" name="action" value="accept" class="btn btn-sm btn-success me-1" title="Accept">
+                                    &#10004; <!-- Tick mark -->
+                                </button>
+                                <button type="submit" name="action" value="reject" class="btn btn-sm btn-danger" title="Reject">
+                                    &#10008; <!-- Cross mark -->
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3" class="text-center text-muted">No pending requests to lend.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

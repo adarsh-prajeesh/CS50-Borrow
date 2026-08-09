@@ -1,0 +1,43 @@
+ {% extends "layout.html" %}
+
+{% block title %}
+    Repay
+{% endblock %}
+
+{% block main %}
+
+ <!-- Borrowed Table -->
+    <div class="mb-3 text-start">
+        <h3>Borrowed:</h3>
+    </div>
+    <div class="mb-4">
+        <table class="table table-striped text-start align-middle">
+            <thead>
+                <tr>
+                    <th class="text-start">Lender</th>
+                    <th class="text-start">Amount</th>
+                    <th class="text-end">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for lender in borrowed %}
+                    <tr>
+                        <td class="text-start">{{ lender.name }}</td>
+                        <td class="text-start">{{ lender.amount | inr }}</td>
+                        <td class="text-end">
+                            <form action="/repay" method="post" class="d-inline">
+                                <input type="hidden" name="lender_id" value="{{ lender.id }}">
+                                <button type="submit" class="btn btn-sm btn-outline-success">Repay</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3" class="text-center text-muted">No active loans taken.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
