@@ -1,5 +1,4 @@
 # Borrow
-My CS50 Final project and it's writeup which I am directly uploading to GitHub
 ## YouTube URL
 https://youtu.be/993B34z99Uc?si=lcHSnWwzSAjO1jzQ
 ## Use
