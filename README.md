@@ -10,8 +10,7 @@ It uses flask, HTML, JS and CSS and runs on the flask server
 - The next page we can see is the Request page, where we can request money from all the users on the website and how much money we need. You can click on the request button.
 - The next page is the Lend page, where we can accept the requests of people who have asked for money from us. These requests, when accepted, will prompt a payment window, which is a simple gateway that I made, from which they can "pay their money. After success, it will transact that money."
 - The last page is the Repay page, where you can see exactly who all you have borrowed money from and easily repay from there.
-# File by file explanations:
-# app.py
+# Part by part explanations:
 ### The cryptography, pywebpush parts
 used to send push notifications to users when they receive a request for money
 ### The SQL part 
