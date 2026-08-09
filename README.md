@@ -21,3 +21,18 @@ The SQL part consists of 4 tables, namely:
 - users
 - push_subscriptions
 The requests table has the rows of requests: request ID, borrower_ID, lender_ID, and amount. The users table has the username and the user's password, which is hashed using the `wakezug.security` `check_password_hash` utility and `generate_password_hash` utility. The transactions table has the transaction ID, the borrower ID, the lender ID, and the amount. The push_subscription has the user's ID and subscription JSON, which is used for the notification utility.
+## The log in & register flow
+The website has a built-in login/register flow, which uses an SQL table to store the user name and the hashed version of their password in the table called `users`. It also checks for:
+- missing user names
+- missing passwords
+- missing confirmed passwords
+It checks if the password and confirmed password match.
+## The index page
+On the index page, we need to display:
+- the borrower's name
+- the lend person's name
+- the amount
+- a button to repay to the person if we have borrowed from them
+To get the name of the person, only the transaction ID or the user's ID is stored in the transactions table. We perform an SQL JOIN function which can gather it, join the tables, and get the names of the people.
+## The request page
+The request page shows a dropdown menu of all the people who are registered on the page from whom we can request money. The text input lets you input the amount of money you want to request from that person. Clicking on request makes an SQL database command which puts the borrower's ID (which is our ID), the lender's ID (which is the other person's ID), and the amount into the request table. It automatically gets populated in the lend page for the person whom we have clicked as the lender. 
