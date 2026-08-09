@@ -20,7 +20,7 @@ The SQL part consists of 4 tables, namely:
 - users
 - push_subscriptions
 The requests table has the rows of requests: request ID, borrower_ID, lender_ID, and amount.
-The users table has the username and the user's password, which is hashed using the `wakezug.security` `check_password_hash` utility and `generate_password_hash` utility. The transactions table has the transaction ID, the borrower ID, the lender ID, and the amount. The push_subscription has the user's ID and subscription JSON, which is used for the notification utility.
+The users table has the username and the user's password, which is hashed using the `werkzug.security` `check_password_hash` utility and `generate_password_hash` utility. The transactions table has the transaction ID, the borrower ID, the lender ID, and the amount. The push_subscription has the user's ID and subscription JSON, which is used for the notification utility.
 The transaction table has the list of all the transactions that are done with the transaction ID, lender ID, borrower ID and amount. 
 The push subscription table was made with the help of AI. It is used for storing the VAPID keys so that notification subscription works. 
 ## The log in & register flow
@@ -46,3 +46,7 @@ Pressing the tick goes to the transaction page and, upon completion of the trans
 Shows the borrowed table from index.html with the repay buttons for quick access 
 ## The handle_request route
 This is not a web page. It is just a route which is used to gather information on whether they press the tick or wrong, or to gather the repay button's click and the person who must be transacted. It automatically calls the transact page based on the set requirements with the correct arguments used for the transact page so that the transaction goes smoothly. 
+## The payment page 
+The payment page is a dummy payment interface which was made just for simulating a card payment. It has all the constraints of a credit card, like the credit card number being a particular number of characters long and the expiry date and CVV number. It also has a graphic on an SVG which will update the credit card number onto the SVG as we type it. It is made using JavaScript. All it does is simulate doing a transaction from one side to the other. It does not link to any real payment gateway. It is just for simulation purposes only. 
+## The VAPID_PUBLIC_KEY route 
+The VAPID public key route is used for storing the public key of the user and returning it using JSONify.
